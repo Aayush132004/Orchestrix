@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "./",       // 👈 Change this from "./src" to "./"
+    "outDir": "./dist",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "generated/**/*"       // 👈 Tells TypeScript it's allowed to compile the generated folder
+  ],
+  "exclude": [
+    "node_modules",
+    "prisma.config.ts"     // 👈 Exclude the config from being built into the dist folder
+  ]
+}
