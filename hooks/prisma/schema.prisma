@@ -16,22 +16,26 @@ model User {
   name     String
   email    String @unique
   password String
+  zaps     Zap[]
 }
 
 model Zap {
   id        String    @id @default(uuid())
-  triggerId String    @unique
-  trigger   Trigger   @relation(fields: [triggerId], references: [id])
+  userId     Int
+  trigger   Trigger?
   actions   Action[]  // a zap can have multiple actions
   zapRuns   ZapRuns[]
+  user      User @relation(fields:[userId],references:[id])
+
 }
 
 model Trigger {
   id        String            @id @default(uuid())
   triggerId String
+  zapId      String @unique
   type      AvailableTriggers @relation(fields: [triggerId], references: [id])
   
-  zap       Zap?              // 4. FIXED: Clean back-relation matching Zap side
+  zap       Zap              @relation(fields:[zapId], references:[id])
 }
 
 model Action {
