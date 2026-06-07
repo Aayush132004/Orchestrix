@@ -1,11 +1,16 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Appbar from "@/components/Appbar";
 import CheckFeature from "@/components/CheckFeature";
 import { Input } from "@/components/Input";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
+import { useRouter } from "next/navigation";
+import  axios  from "axios";
+
+import { BACKEND_URL } from "../config";
 
 export default function Signup() {
+  const router=useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,10 +63,26 @@ export default function Signup() {
             onChange={(e) => setPassword(e.target.value)} 
           />
 
-          <div className="mt-4 w-full flex flex-col">
-            <PrimaryButton onClick={() => console.log({ name, email, password })} size="big">
+          <div className="mt-4 w-full flex flex-col gap-4">
+            <PrimaryButton onClick={async() =>{
+              const res=await axios.post(`${BACKEND_URL}/api/v1/user/signup`,{
+               username:email,
+               password,
+               name
+              })
+              router.push("/login")
+            }
+         
+            } size="big">
               Sign up
             </PrimaryButton>
+            
+            <p className="text-center text-sm text-slate-500">
+              Already have an account?{" "}
+              <a href="/login" className="text-indigo-600 font-semibold hover:underline">
+                Log in
+              </a>
+            </p>
           </div>
         </div>
 

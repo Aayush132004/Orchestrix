@@ -9,13 +9,13 @@ import 'dotenv/config';
 const router=Router();
 
 router.post("/signup",async(req,res)=>{
-    const body=req.body.username
-
+    const body=req.body
+    console.log(body)
     const parsedData=SignupSchema.safeParse(body);
 
     if(!parsedData.success){
         return res.status(411).json({
-            message:"Incorrect inputs"
+            message:"Incorrect input"
         })
     }
 
@@ -50,15 +50,17 @@ router.post("/signup",async(req,res)=>{
 })
 
 router.post("/signin",async(req,res)=>{
+    try{
     const body=req.body;
     const parsedData=SigninSchema.safeParse(body);
-
+    // console.log("bp1")
     if(!parsedData.success){
         return res.status(411).json({
             message:"Incorrect inputs"
         })
     }
-
+    // console.log("body is ",body)
+    //  console.log("bp2")
     //user not exists 
     const user=await prisma.user.findFirst({
       where:{
@@ -66,6 +68,8 @@ router.post("/signin",async(req,res)=>{
         password:parsedData.data.password
       }
     })
+    // console.log(user);
+    //  console.log("bp3")
 
     if(!user)
     {
@@ -77,10 +81,18 @@ router.post("/signin",async(req,res)=>{
     const token=jwt.sign({
         id:user.id,
     },process.env.JWT_SECRET as string);//as string to have no type error of undefined
-    
+    //  console.log("bp4")
     res.json({
         token:token,
     })
+}
+catch(e)
+{
+    res.json({
+        message:"Error Signing you in"
+    })
+}
+    
 })
 
 router.get("/user",authMiddleware,async(req,res)=>{

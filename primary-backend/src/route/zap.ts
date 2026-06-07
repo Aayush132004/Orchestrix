@@ -51,7 +51,7 @@ catch(e:any)
 
 
 //getting specific zap
-router.post("/",authMiddleware,async(req,res)=>{
+router.get("/",authMiddleware,async(req,res)=>{
    //@ts-ignore
    try{
     //@ts-ignore
