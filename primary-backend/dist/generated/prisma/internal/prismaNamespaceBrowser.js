@@ -80,11 +80,13 @@ export const ActionScalarFieldEnum = {
 };
 export const AvailableTriggersScalarFieldEnum = {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    image: 'image'
 };
 export const AvailableActionScalarFieldEnum = {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    image: 'image'
 };
 export const ZapRunsScalarFieldEnum = {
     id: 'id',

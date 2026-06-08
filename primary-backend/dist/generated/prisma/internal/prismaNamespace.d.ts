@@ -909,11 +909,13 @@ export type ActionScalarFieldEnum = (typeof ActionScalarFieldEnum)[keyof typeof 
 export declare const AvailableTriggersScalarFieldEnum: {
     readonly id: "id";
     readonly name: "name";
+    readonly image: "image";
 };
 export type AvailableTriggersScalarFieldEnum = (typeof AvailableTriggersScalarFieldEnum)[keyof typeof AvailableTriggersScalarFieldEnum];
 export declare const AvailableActionScalarFieldEnum: {
     readonly id: "id";
     readonly name: "name";
+    readonly image: "image";
 };
 export type AvailableActionScalarFieldEnum = (typeof AvailableActionScalarFieldEnum)[keyof typeof AvailableActionScalarFieldEnum];
 export declare const ZapRunsScalarFieldEnum: {

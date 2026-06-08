@@ -1063,7 +1063,8 @@ export type ZapScalarFieldEnum = (typeof ZapScalarFieldEnum)[keyof typeof ZapSca
 export const TriggerScalarFieldEnum = {
   id: 'id',
   triggerId: 'triggerId',
-  zapId: 'zapId'
+  zapId: 'zapId',
+  metadata: 'metadata'
 } as const
 
 export type TriggerScalarFieldEnum = (typeof TriggerScalarFieldEnum)[keyof typeof TriggerScalarFieldEnum]
@@ -1081,7 +1082,8 @@ export type ActionScalarFieldEnum = (typeof ActionScalarFieldEnum)[keyof typeof 
 
 export const AvailableTriggersScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  image: 'image'
 } as const
 
 export type AvailableTriggersScalarFieldEnum = (typeof AvailableTriggersScalarFieldEnum)[keyof typeof AvailableTriggersScalarFieldEnum]
@@ -1089,7 +1091,8 @@ export type AvailableTriggersScalarFieldEnum = (typeof AvailableTriggersScalarFi
 
 export const AvailableActionScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  image: 'image'
 } as const
 
 export type AvailableActionScalarFieldEnum = (typeof AvailableActionScalarFieldEnum)[keyof typeof AvailableActionScalarFieldEnum]

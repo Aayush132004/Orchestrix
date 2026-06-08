@@ -4,6 +4,7 @@ import { ZapCreateSchema } from "../types/index.js";
 const router=Router();
 import prisma from "../db/index.js";
 
+//create a zap
 router.post("/",authMiddleware,async(req,res)=>{
     const body=req.body;
     //@ts-ignore
@@ -28,7 +29,8 @@ router.post("/",authMiddleware,async(req,res)=>{
             actions: {
                 create: parsedData.data.actions.map((x, index) => ({
                     actionId: x.availableActionId,
-                    sortingOrder: index
+                    sortingOrder: index,
+                    metadata:x.actionMetadata
                 }))
             }
         }
@@ -50,7 +52,7 @@ catch(e:any)
 })
 
 
-//getting specific zap
+//get all zaps of a person
 router.get("/",authMiddleware,async(req,res)=>{
    //@ts-ignore
    try{

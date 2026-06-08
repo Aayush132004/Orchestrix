@@ -19,5 +19,6 @@ export const ZapCreateSchema=z.object({
     actions:z.array(z.object({
         availableActionId:z.string(),
         actionMetadata:z.any().optional()
+    
     }))
 })

@@ -13,27 +13,33 @@ export type AggregateAvailableTriggers = {
 export type AvailableTriggersMinAggregateOutputType = {
     id: string | null;
     name: string | null;
+    image: string | null;
 };
 export type AvailableTriggersMaxAggregateOutputType = {
     id: string | null;
     name: string | null;
+    image: string | null;
 };
 export type AvailableTriggersCountAggregateOutputType = {
     id: number;
     name: number;
+    image: number;
     _all: number;
 };
 export type AvailableTriggersMinAggregateInputType = {
     id?: true;
     name?: true;
+    image?: true;
 };
 export type AvailableTriggersMaxAggregateInputType = {
     id?: true;
     name?: true;
+    image?: true;
 };
 export type AvailableTriggersCountAggregateInputType = {
     id?: true;
     name?: true;
+    image?: true;
     _all?: true;
 };
 export type AvailableTriggersAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -101,6 +107,7 @@ export type AvailableTriggersGroupByArgs<ExtArgs extends runtime.Types.Extension
 export type AvailableTriggersGroupByOutputType = {
     id: string;
     name: string;
+    image: string;
     _count: AvailableTriggersCountAggregateOutputType | null;
     _min: AvailableTriggersMinAggregateOutputType | null;
     _max: AvailableTriggersMaxAggregateOutputType | null;
@@ -114,11 +121,13 @@ export type AvailableTriggersWhereInput = {
     NOT?: Prisma.AvailableTriggersWhereInput | Prisma.AvailableTriggersWhereInput[];
     id?: Prisma.StringFilter<"AvailableTriggers"> | string;
     name?: Prisma.StringFilter<"AvailableTriggers"> | string;
+    image?: Prisma.StringFilter<"AvailableTriggers"> | string;
     triggers?: Prisma.TriggerListRelationFilter;
 };
 export type AvailableTriggersOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    image?: Prisma.SortOrder;
     triggers?: Prisma.TriggerOrderByRelationAggregateInput;
 };
 export type AvailableTriggersWhereUniqueInput = Prisma.AtLeast<{
@@ -127,11 +136,13 @@ export type AvailableTriggersWhereUniqueInput = Prisma.AtLeast<{
     OR?: Prisma.AvailableTriggersWhereInput[];
     NOT?: Prisma.AvailableTriggersWhereInput | Prisma.AvailableTriggersWhereInput[];
     name?: Prisma.StringFilter<"AvailableTriggers"> | string;
+    image?: Prisma.StringFilter<"AvailableTriggers"> | string;
     triggers?: Prisma.TriggerListRelationFilter;
 }, "id">;
 export type AvailableTriggersOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    image?: Prisma.SortOrder;
     _count?: Prisma.AvailableTriggersCountOrderByAggregateInput;
     _max?: Prisma.AvailableTriggersMaxOrderByAggregateInput;
     _min?: Prisma.AvailableTriggersMinOrderByAggregateInput;
@@ -142,38 +153,46 @@ export type AvailableTriggersScalarWhereWithAggregatesInput = {
     NOT?: Prisma.AvailableTriggersScalarWhereWithAggregatesInput | Prisma.AvailableTriggersScalarWhereWithAggregatesInput[];
     id?: Prisma.StringWithAggregatesFilter<"AvailableTriggers"> | string;
     name?: Prisma.StringWithAggregatesFilter<"AvailableTriggers"> | string;
+    image?: Prisma.StringWithAggregatesFilter<"AvailableTriggers"> | string;
 };
 export type AvailableTriggersCreateInput = {
     id?: string;
     name: string;
+    image: string;
     triggers?: Prisma.TriggerCreateNestedManyWithoutTypeInput;
 };
 export type AvailableTriggersUncheckedCreateInput = {
     id?: string;
     name: string;
+    image: string;
     triggers?: Prisma.TriggerUncheckedCreateNestedManyWithoutTypeInput;
 };
 export type AvailableTriggersUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    image?: Prisma.StringFieldUpdateOperationsInput | string;
     triggers?: Prisma.TriggerUpdateManyWithoutTypeNestedInput;
 };
 export type AvailableTriggersUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    image?: Prisma.StringFieldUpdateOperationsInput | string;
     triggers?: Prisma.TriggerUncheckedUpdateManyWithoutTypeNestedInput;
 };
 export type AvailableTriggersCreateManyInput = {
     id?: string;
     name: string;
+    image: string;
 };
 export type AvailableTriggersUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    image?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type AvailableTriggersUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    image?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type AvailableTriggersScalarRelationFilter = {
     is?: Prisma.AvailableTriggersWhereInput;
@@ -182,14 +201,17 @@ export type AvailableTriggersScalarRelationFilter = {
 export type AvailableTriggersCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    image?: Prisma.SortOrder;
 };
 export type AvailableTriggersMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    image?: Prisma.SortOrder;
 };
 export type AvailableTriggersMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    image?: Prisma.SortOrder;
 };
 export type AvailableTriggersCreateNestedOneWithoutTriggersInput = {
     create?: Prisma.XOR<Prisma.AvailableTriggersCreateWithoutTriggersInput, Prisma.AvailableTriggersUncheckedCreateWithoutTriggersInput>;
@@ -206,10 +228,12 @@ export type AvailableTriggersUpdateOneRequiredWithoutTriggersNestedInput = {
 export type AvailableTriggersCreateWithoutTriggersInput = {
     id?: string;
     name: string;
+    image: string;
 };
 export type AvailableTriggersUncheckedCreateWithoutTriggersInput = {
     id?: string;
     name: string;
+    image: string;
 };
 export type AvailableTriggersCreateOrConnectWithoutTriggersInput = {
     where: Prisma.AvailableTriggersWhereUniqueInput;
@@ -227,10 +251,12 @@ export type AvailableTriggersUpdateToOneWithWhereWithoutTriggersInput = {
 export type AvailableTriggersUpdateWithoutTriggersInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    image?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type AvailableTriggersUncheckedUpdateWithoutTriggersInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    image?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 /**
  * Count Type AvailableTriggersCountOutputType
@@ -259,22 +285,26 @@ export type AvailableTriggersCountOutputTypeCountTriggersArgs<ExtArgs extends ru
 export type AvailableTriggersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    image?: boolean;
     triggers?: boolean | Prisma.AvailableTriggers$triggersArgs<ExtArgs>;
     _count?: boolean | Prisma.AvailableTriggersCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["availableTriggers"]>;
 export type AvailableTriggersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    image?: boolean;
 }, ExtArgs["result"]["availableTriggers"]>;
 export type AvailableTriggersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    image?: boolean;
 }, ExtArgs["result"]["availableTriggers"]>;
 export type AvailableTriggersSelectScalar = {
     id?: boolean;
     name?: boolean;
+    image?: boolean;
 };
-export type AvailableTriggersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["availableTriggers"]>;
+export type AvailableTriggersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "image", ExtArgs["result"]["availableTriggers"]>;
 export type AvailableTriggersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     triggers?: boolean | Prisma.AvailableTriggers$triggersArgs<ExtArgs>;
     _count?: boolean | Prisma.AvailableTriggersCountOutputTypeDefaultArgs<ExtArgs>;
@@ -289,6 +319,7 @@ export type $AvailableTriggersPayload<ExtArgs extends runtime.Types.Extensions.I
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
         name: string;
+        image: string;
     }, ExtArgs["result"]["availableTriggers"]>;
     composites: {};
 };
@@ -646,6 +677,7 @@ export interface Prisma__AvailableTriggersClient<T, Null = never, ExtArgs extend
 export interface AvailableTriggersFieldRefs {
     readonly id: Prisma.FieldRef<"AvailableTriggers", 'String'>;
     readonly name: Prisma.FieldRef<"AvailableTriggers", 'String'>;
+    readonly image: Prisma.FieldRef<"AvailableTriggers", 'String'>;
 }
 /**
  * AvailableTriggers findUnique
