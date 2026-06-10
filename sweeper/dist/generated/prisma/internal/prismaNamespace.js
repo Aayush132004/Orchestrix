@@ -93,24 +93,30 @@ export const UserScalarFieldEnum = {
 };
 export const ZapScalarFieldEnum = {
     id: 'id',
-    triggerId: 'triggerId'
+    userId: 'userId'
 };
 export const TriggerScalarFieldEnum = {
     id: 'id',
-    triggerId: 'triggerId'
+    triggerId: 'triggerId',
+    zapId: 'zapId',
+    metadata: 'metadata'
 };
 export const ActionScalarFieldEnum = {
     id: 'id',
     zapId: 'zapId',
-    actionId: 'actionId'
+    actionId: 'actionId',
+    metadata: 'metadata',
+    sortingOrder: 'sortingOrder'
 };
 export const AvailableTriggersScalarFieldEnum = {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    image: 'image'
 };
 export const AvailableActionScalarFieldEnum = {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    image: 'image'
 };
 export const ZapRunsScalarFieldEnum = {
     id: 'id',

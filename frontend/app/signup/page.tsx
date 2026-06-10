@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import  axios  from "axios";
 
 import { BACKEND_URL } from "../config";
-
+//  console.log("Backend",BACKEND_URL)
 export default function Signup() {
   const router=useRouter();
   const [name, setName] = useState("");
@@ -65,6 +65,7 @@ export default function Signup() {
 
           <div className="mt-4 w-full flex flex-col gap-4">
             <PrimaryButton onClick={async() =>{
+              console.log("Backend",BACKEND_URL)
               const res=await axios.post(`${BACKEND_URL}/api/v1/user/signup`,{
                username:email,
                password,

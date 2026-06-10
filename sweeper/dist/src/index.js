@@ -23,7 +23,7 @@ async function main() {
         producer.send({
             topic: TOPIC_NAME,
             messages: pendingRows.map(r => ({
-                value: r.zapRunId
+                value: JSON.stringify({ zapRunId: r.zapRunId, stage: 0 }) //stage tell which step of execution of that zap ie trigger or which action basically step
             }))
         });
         await client.zapRunOutbox.deleteMany({

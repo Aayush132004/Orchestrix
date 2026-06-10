@@ -44,6 +44,6 @@ app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
     //store in db a new trigger
     //push it on to a queue(kafka,redis)
 });
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(3004, async () => {
+    console.log('Hook Server is running on port 3004');
 });

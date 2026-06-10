@@ -121,7 +121,8 @@ export default function CreateZap() {
                         if (selectedModalIndex === 1) {
                             setSelectedTrigger({
                                 id: props.id,
-                                name: props.name
+                                name: props.name,
+                                
                             })
                         } else {
                             setSelectedActions(a => {
@@ -143,7 +144,7 @@ export default function CreateZap() {
     )
 }
 
-function Modal({ index, onSelect, availableItems }: { index: number, onSelect: (props: null | { name: string; id: string; metadata:string }) => void, availableItems: { id: string, name: string, image: string; }[] }) {
+function Modal({ index, onSelect, availableItems }: { index: number, onSelect: (props: null | { name: string; id: string; metadata:any }) => void, availableItems: { id: string, name: string, image: string; }[] }) {
     
     const[step,setStep]=useState(0)
     const isTrigger=index===1
@@ -171,13 +172,13 @@ function Modal({ index, onSelect, availableItems }: { index: number, onSelect: (
                         {/* {JSON.stringify(selectedAction)} */}
                          {/* Doing conditional render of which modal to render to enter metadata when entered at step one ie selected action */}
                          {/* //this should be done on backend but for now doing on frontend */}
-                         {(step===1&&selectedAction?.name==="Email")&&<EmailSelector setMetadata={(metadata)=>{
+                         {(step===1&&selectedAction?.id==="send-email")&&<EmailSelector setMetadata={(metadata)=>{
                             onSelect({
                                 ...selectedAction,
                                 metadata
                             })
                          }}/>}
-                         {(step===1&&selectedAction?.name==="Solana")&&<SolanaSelector setMetadata={(metadata)=>{
+                         {(step===1&&selectedAction?.id==="send-sol")&&<SolanaSelector setMetadata={(metadata)=>{
                              onSelect({
                                 ...selectedAction,
                                 metadata
@@ -192,7 +193,8 @@ function Modal({ index, onSelect, availableItems }: { index: number, onSelect: (
                             if(isTrigger){
                                 onSelect({
                                     id,
-                                    name
+                                    name,
+                                    metadata:{}
                                 })
                             }
                                 else{

@@ -13,5 +13,7 @@ app.use("/api/v1/zap", zapRouter);
 app.use("/api/v1/trigger", triggerRouter);
 //to choose diff type of action
 app.use("/api/v1/action", actionRouter);
-app.listen(3001);
+app.listen(3002, () => {
+    console.log("Primary-backend listening to port 3002");
+});
 //# sourceMappingURL=index.js.map

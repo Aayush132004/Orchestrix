@@ -3,7 +3,7 @@ import Appbar from "@/components/Appbar";
 import DarkButton from "@/components/buttons/DarkButton";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL,HOOKS_URL } from "../config";
 import LinkButton from "@/components/buttons/LinkButton";
 import { useRouter } from "next/navigation";
 
@@ -184,7 +184,7 @@ function ZapTable({ zaps }: { zaps: Zap[] }) {
                             
                             {/* 6. Webhook URL */}
                             <div className="font-mono text-xs text-slate-400 truncate">
-                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">/hooks/catch/{z.id}</span>
+                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">/{`${HOOKS_URL}/hooks/catch/1/${z.id}`}</span>
                             </div>
                             
                             {/* 7. Action Link Button */}

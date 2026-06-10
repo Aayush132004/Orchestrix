@@ -9,6 +9,7 @@ import 'dotenv/config';
 const router=Router();
 
 router.post("/signup",async(req,res)=>{
+    console.log("signup")
     const body=req.body
     console.log(body)
     const parsedData=SignupSchema.safeParse(body);
