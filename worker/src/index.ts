@@ -3,6 +3,7 @@ import {Kafka} from "kafkajs"
 import prisma from "../db/index.js"
 import type { JsonObject } from "@prisma/client/runtime/client";
 import { parse } from "./parser.js";
+import { sendEmail } from "./email.js";
 
 
 
@@ -79,7 +80,8 @@ async function main() {
           const body=parse((currentAction.metadata as JsonObject)?.body as string,zapRunMetadata);//this value be somthing like ==> you just receives {comment.amount}
           const to=parse((currentAction.metadata as JsonObject)?.email as string,zapRunMetadata);//{comment.email}
           //require to parse these(string manipulation) ( fill template with extracted info) to send mail to person 
-          console.log(`Sending out email to ${to} & body is ${body}`)
+          // console.log(`Sending out email to ${to} & body is ${body}`)
+          await sendEmail(to,body);
           }
           if(currentAction.type.id==="send-sol"){
             console.log("Sending out solana")
