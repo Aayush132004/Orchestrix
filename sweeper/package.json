@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -b",
+    "build": "npx prisma generate && tsc -b",
     "start": "tsc -b && node dist/src/index.js"
   },
   "keywords": [],
