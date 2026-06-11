@@ -15,11 +15,12 @@ const DarkButton = ({
     <button 
       onClick={onClick} 
       className={`
-        ${size === "small" ? "text-sm px-5 py-2" : "text-xl px-10 py-4"} 
-        bg-violet-700 text-white font-medium rounded-lg shadow-sm 
-        hover:bg-violet-800 transition-colors duration-200 
-        focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2
-        text-center inline-flex items-center justify-center
+        ${size === "small" ? "text-sm px-5 py-2.5" : "text-lg px-8 py-3.5"} 
+        bg-slate-900 text-white font-semibold rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.15)]
+        hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+        transition-all duration-200 cursor-pointer
+        focus:outline-none focus:ring-2 focus:ring-[#4a7c59]/40 focus:ring-offset-2
+        text-center inline-flex items-center justify-center gap-2
       `}
     >
       {children}

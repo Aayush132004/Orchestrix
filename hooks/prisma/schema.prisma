@@ -68,6 +68,7 @@ model ZapRuns {
   id           String        @id @default(uuid())
   zapId        String
   metadata     Json
+  createdAt    DateTime      @default(now())
   zapRunOutbox ZapRunOutbox? // one to one relation with zapRunOutbox
   zap          Zap           @relation(fields: [zapId], references: [id])
 }

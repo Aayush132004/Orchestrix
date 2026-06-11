@@ -1102,7 +1102,8 @@ export type AvailableActionScalarFieldEnum = (typeof AvailableActionScalarFieldE
 export const ZapRunsScalarFieldEnum = {
   id: 'id',
   zapId: 'zapId',
-  metadata: 'metadata'
+  metadata: 'metadata',
+  createdAt: 'createdAt'
 } as const
 
 export type ZapRunsScalarFieldEnum = (typeof ZapRunsScalarFieldEnum)[keyof typeof ZapRunsScalarFieldEnum]
@@ -1193,6 +1194,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 

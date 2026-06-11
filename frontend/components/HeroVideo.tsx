@@ -2,78 +2,84 @@ import React from 'react'
 
 export const HeroVideo = () => {
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 mt-4">
+    <div className="w-full max-w-2xl mx-auto px-4 mt-8">
       {/* Container simulating a premium web application window */}
-      <div className="relative rounded-2xl border border-slate-200 bg-slate-900/5 shadow-2xl overflow-hidden backdrop-blur-sm p-2 sm:p-4">
+      <div className="relative rounded-3xl border border-[#e8e4df]/85 bg-[#faf9f6]/40 shadow-2xl overflow-hidden backdrop-blur-md p-2 sm:p-4">
         
         {/* Window Top Bar (Mac style buttons) */}
-        <div className="flex items-center gap-2 pb-3 px-2 border-b border-slate-200/60 sm:pb-4">
-          <div className="w-3 h-3 rounded-full bg-slate-300" />
-          <div className="w-3 h-3 rounded-full bg-slate-300" />
-          <div className="w-3 h-3 rounded-full bg-slate-300" />
-          <div className="ml-4 text-xs font-medium text-slate-400 bg-slate-100 px-3 py-1 rounded-md border border-slate-200/40">
-            orchestrix.com/dashboard/workflows
+        <div className="flex items-center gap-2 pb-3 px-2 border-b border-[#e8e4df]/60 sm:pb-4">
+          <div className="w-3 h-3 rounded-full bg-red-400/80 border border-red-500/10" />
+          <div className="w-3 h-3 rounded-full bg-yellow-400/80 border border-yellow-500/10" />
+          <div className="w-3 h-3 rounded-full bg-green-400/80 border border-green-500/10" />
+          <div className="ml-4 text-[10px] sm:text-xs font-mono text-slate-400 bg-[#faf9f6] px-3 py-1 rounded-md border border-[#e8e4df]/60">
+            orchestrix.com/zap/create
           </div>
         </div>
 
         {/* Dashboard Canvas Simulation */}
-        <div className="bg-slate-950 rounded-xl min-h-[300px] sm:min-h-[380px] p-6 text-left flex flex-col justify-between relative overflow-hidden group">
+        <div className="bg-white rounded-2xl min-h-[340px] sm:min-h-[380px] p-6 text-left flex flex-col justify-between relative overflow-hidden group border border-[#e8e4df]/60 mt-3 sm:mt-4 shadow-[0_12px_40px_rgba(0,0,0,0.02)]">
           
           {/* Decorative Grid Overlay for Automation Canvas feeling */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20" />
+          <div className="absolute inset-0 bg-[radial-gradient(#e8e4df_1.2px,transparent_1.2px)] bg-[size:24px_24px] opacity-75" />
 
           {/* Simulated Automation Nodes */}
-          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-around gap-8 my-auto w-full">
+          <div className="relative z-10 flex flex-col items-center gap-2 py-4 my-auto w-full">
             
-            {/* Node 1: Trigger */}
-            <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl shadow-lg w-full sm:w-48 text-center">
-              <div className="text-[10px] font-bold tracking-wider text-slate-400 uppercase mb-1">Catch Trigger</div>
-              <div className="text-sm font-semibold text-white">Webhook Received</div>
-              <div className="mt-2 inline-flex items-center gap-1.5 text-[10px] text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded-full font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> 200 OK
+            {/* Step 1: Webhook Trigger */}
+            <div className="relative w-full max-w-[340px] p-4 bg-white border border-[#e8e4df] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.015)] flex items-center gap-4 transition-transform group-hover:scale-[1.01] duration-300">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#4a7c59] rounded-l-2xl"></div>
+              <div className="w-7 h-7 rounded-xl bg-[#e8f0eb] text-[#3d6b4a] border border-[#a3c4ab]/30 flex items-center justify-center font-bold text-xs shrink-0">1</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Trigger Source</div>
+                <div className="text-sm font-bold text-slate-800">Webhook</div>
               </div>
+              <img 
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVQtyw3YP4pW8owoHsGyCI2o8POL2m7Hf9NA&s" 
+                className="w-7 h-7 object-contain rounded shrink-0 shadow-sm border border-slate-100" 
+                alt="Webhook logo" 
+              />
             </div>
 
-            {/* Connecting line spacer 1 */}
-            <div className="hidden sm:block h-0.5 flex-1 bg-gradient-to-r from-slate-800 via-amber-600 to-amber-700 relative">
-              <div className="absolute top-1/2 left-0 bg-amber-500 w-2 h-2 rounded-full animate-ping" style={{ animationDuration: '2s' }} />
+            {/* Down Connector */}
+            <div className="h-6 w-[2px] bg-slate-300 relative">
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 border-t-[5px] border-t-slate-400 border-x-[3px] border-x-transparent w-0 h-0"></div>
             </div>
 
-            {/* Node 2: Central Router / Orchestrator */}
-            <div className="bg-slate-900 border-2 border-amber-700 p-5 rounded-xl shadow-xl w-full sm:w-52 text-center ring-4 ring-amber-950/40">
-              <div className="text-[10px] font-bold tracking-wider text-amber-500 uppercase mb-1">Orchestrator</div>
-              <div className="text-sm font-bold text-white">Filter & Map Data</div>
-              <div className="mt-2 text-[11px] text-amber-200/80 bg-amber-950/60 py-1 px-2 rounded font-mono border border-amber-900/50">
-                payload.id → user_id
+            {/* Step 2: AI Action */}
+            <div className="relative w-full max-w-[340px] p-4 bg-white border border-[#e8e4df] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.015)] flex items-center gap-4 transition-transform group-hover:scale-[1.01] duration-300 delay-75">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#78a085] rounded-l-2xl"></div>
+              <div className="w-7 h-7 rounded-xl bg-[#e8f0eb]/50 text-[#4a7c59] border border-[#a3c4ab]/20 flex items-center justify-center font-bold text-xs shrink-0">2</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Action Step</div>
+                <div className="text-sm font-bold text-slate-800">AI Block</div>
               </div>
+              <img 
+                src="https://cdn-icons-png.flaticon.com/512/4616/4616734.png" 
+                className="w-7 h-7 object-contain rounded shrink-0 shadow-sm border border-slate-100" 
+                alt="AI Block logo"
+              />
             </div>
 
-            {/* Connecting line spacer 2 */}
-            <div className="hidden sm:block h-0.5 flex-1 bg-gradient-to-r from-amber-700 via-slate-800 to-slate-800 relative">
-              <div className="absolute top-1/2 left-0 bg-amber-500 w-2 h-2 rounded-full animate-ping" style={{ animationDuration: '2s', animationDelay: '1s' }} />
+            {/* Down Connector */}
+            <div className="h-6 w-[2px] bg-slate-300 relative">
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 border-t-[5px] border-t-slate-400 border-x-[3px] border-x-transparent w-0 h-0"></div>
             </div>
 
-            {/* Node 3: Action */}
-            <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl shadow-lg w-full sm:w-48 text-center">
-              <div className="text-[10px] font-bold tracking-wider text-slate-400 uppercase mb-1">Execute Action</div>
-              <div className="text-sm font-semibold text-white">Sync Database Table</div>
-              <div className="mt-2 inline-flex items-center gap-1.5 text-[10px] text-slate-400 bg-slate-950 px-2 py-0.5 rounded-full font-mono">
-                Success
+            {/* Step 3: Send Email */}
+            <div className="relative w-full max-w-[340px] p-4 bg-white border border-[#e8e4df] rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.015)] flex items-center gap-4 transition-transform group-hover:scale-[1.01] duration-300 delay-150">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#78a085] rounded-l-2xl"></div>
+              <div className="w-7 h-7 rounded-xl bg-[#e8f0eb]/50 text-[#4a7c59] border border-[#a3c4ab]/20 flex items-center justify-center font-bold text-xs shrink-0">3</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Action Step</div>
+                <div className="text-sm font-bold text-slate-800">Send Email</div>
               </div>
+              <img 
+                src="https://thumbs.dreamstime.com/b/gmail-email-logo-icon-beautiful-meticulously-designed-225149202.jpg" 
+                className="w-7 h-7 object-contain rounded shrink-0 shadow-sm border border-slate-100" 
+                alt="Gmail logo"
+              />
             </div>
 
-          </div>
-
-          {/* Bottom Execution Live-Log Status bar */}
-          <div className="relative z-10 bg-slate-900 border border-slate-800/80 rounded-lg p-3 flex items-center justify-between w-full max-w-xl mx-auto mt-auto shadow-2xl font-mono text-xs">
-            <div className="flex items-center gap-3 text-slate-300">
-              <span className="text-amber-600 font-bold">&gt;_</span>
-              <span className="text-slate-400">Workflow live:</span>
-              <span className="text-slate-200 animate-pulse">Processed 1,420 tasks/min</span>
-            </div>
-            <div className="text-[11px] font-semibold text-amber-500 bg-amber-950/40 px-2 py-0.5 rounded border border-amber-900/30">
-              Active
-            </div>
           </div>
 
         </div>

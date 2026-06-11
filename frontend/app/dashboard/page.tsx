@@ -3,7 +3,7 @@ import Appbar from "@/components/Appbar";
 import DarkButton from "@/components/buttons/DarkButton";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BACKEND_URL,HOOKS_URL } from "../config";
+import { BACKEND_URL, HOOKS_URL } from "../config";
 import LinkButton from "@/components/buttons/LinkButton";
 import { useRouter } from "next/navigation";
 
@@ -34,77 +34,107 @@ interface Zap {
     }
 }
 
-function useZaps() {
+function useZaps(token: string | null) {
     const [loading, setLoading] = useState(true);
     const [zaps, setZaps] = useState<Zap[]>([]);
 
     useEffect(() => {
+        if (!token) return;
         axios.get(`${BACKEND_URL}/api/v1/zap`, {
             headers: {
-                "Authorization": localStorage.getItem("token")
+                "Authorization": token
             }
         })
         .then(res => {
-            setZaps(res.data.zaps);
+            setZaps(res.data.zaps || []);
             setLoading(false);
         })
         .catch(err => {
             console.error("Error fetching zaps:", err);
             setLoading(false);
         });
-    }, []);
+    }, [token]);
 
     return { loading, zaps };
 }
 
 export default function MyZapsPage() {
-    const { loading, zaps } = useZaps();
     const router = useRouter();
+    const [token, setToken] = useState<string | null>(null);
+    const [checkingAuth, setCheckingAuth] = useState(true);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (!storedToken) {
+            router.push("/login");
+        } else {
+            setToken(storedToken);
+            setCheckingAuth(false);
+        }
+    }, [router]);
+
+    const { loading, zaps } = useZaps(token);
+    const validZaps = zaps.filter(z => z.trigger && z.actions && z.actions.length > 0);
+
+    if (checkingAuth) {
+        return (
+          <div className="min-h-screen bg-[#faf9f6] flex items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-10 h-10 border-4 border-[#4a7c59] border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-slate-500 text-sm font-semibold tracking-wider">Loading your dashboard...</p>
+            </div>
+          </div>
+        );
+    }
     
     return (
-        <div className="min-h-screen bg-[#FAF9F6] text-slate-900 flex flex-col">
-            <div className="bg-white border-b border-slate-200/50">
-                <Appbar />
-            </div>
+        <div className="min-h-screen bg-[#faf9f6] text-slate-900 flex flex-col">
+            <Appbar />
             
-            <div className="flex justify-center pt-12">
-                <div className="max-w-screen-lg w-full px-8">
-                    <div className="flex justify-between items-center border-b border-slate-200/60 pb-6 mb-4">
-                        <div className="text-3xl font-extrabold tracking-tight text-slate-900">
-                            My Zaps
-                        </div>
-                        <DarkButton onClick={() => {
-                            router.push("/zap/create");
-                        }}>Create</DarkButton>
+            <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-10">
+                <div className="flex justify-between items-end border-b border-slate-200/60 pb-6 mb-8">
+                    <div className="space-y-1">
+                        <h1 className="text-3xl font-black tracking-tight text-slate-900">
+                            My Workflows
+                        </h1>
+                        <p className="text-sm text-slate-400">Manage, launch, and monitor your custom active automations.</p>
                     </div>
+                    <DarkButton onClick={() => {
+                        router.push("/zap/create");
+                    }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        <span>Create Zap</span>
+                    </DarkButton>
                 </div>
-            </div>
-            
-            {loading ? (
-                <div className="flex justify-center pt-12 text-slate-400 font-medium text-sm animate-pulse">
-                    Loading Zaps...
-                </div>
-            ) : zaps.length === 0 ? (
-                <div className="flex justify-center pt-4">
-                    <div className="max-w-screen-lg w-full px-8">
-                        <div className="flex flex-col items-center justify-center border border-dashed border-slate-200 bg-white rounded-2xl py-16 px-4 text-center shadow-sm">
-                            <div className="bg-amber-50 text-amber-700 p-3 rounded-full mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                                </svg>
-                            </div>
-                            <p className="text-slate-800 font-bold text-lg">No Zaps exist yet</p>
-                            <p className="text-sm text-slate-500 mt-2 max-w-sm leading-relaxed">
-                                Get started by creating your <span className="bg-amber-100/70 text-amber-950 px-1.5 py-0.5 rounded font-medium">first automation workflow</span> to run tasks automatically.
-                            </p>
+                
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20 gap-4">
+                        <div className="w-8 h-8 border-3 border-[#4a7c59] border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-[#4a7c59] text-sm font-medium animate-pulse">Fetching your workflows...</p>
+                    </div>
+                ) : validZaps.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center border border-[#e8e4df]/60 bg-white rounded-3xl py-20 px-6 text-center shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
+                        <div className="bg-[#e8f0eb] text-[#3d6b4a] p-4 rounded-2xl mb-5 shadow-inner">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-800">No active workflows</h3>
+                        <p className="text-sm text-slate-400 mt-2 max-w-sm leading-relaxed">
+                            Create your first automation workflow to run tasks across multiple applications instantly.
+                        </p>
+                        <div className="mt-6">
+                            <DarkButton onClick={() => router.push("/zap/create")}>Build a Zap</DarkButton>
                         </div>
                     </div>
-                </div>
-            ) : (
-                <div className="flex justify-center"> 
-                    <ZapTable zaps={zaps} /> 
-                </div>
-            )}
+                ) : (
+                    <div className="flex flex-col gap-6"> 
+                        <ZapTable zaps={validZaps} /> 
+                    </div>
+                )}
+            </main>
         </div>
     );
 }
@@ -112,92 +142,126 @@ export default function MyZapsPage() {
 function ZapTable({ zaps }: { zaps: Zap[] }) {
     const router = useRouter();
 
-    // Reusable grid layout structure for perfect column alignment
-    const gridLayout = "grid grid-cols-[2.5fr_1fr_1fr_1.2fr_1fr_1.3fr_0.5fr] items-center gap-4 px-6 py-4";
-
     return (
-        <div className="p-8 max-w-screen-lg w-full">
-            <div className="w-full border border-slate-200/70 rounded-xl shadow-sm overflow-hidden bg-white">
-                
-                {/* Table Header */}
-                <div className={`${gridLayout} bg-slate-50/70 border-b border-slate-200/70 text-xs font-bold uppercase tracking-wider text-slate-500`}>
-                    <div>Workflow Steps</div>
-                    <div>Last Edit</div>
-                    <div>Status</div>
-                    <div>Zap ID</div>
-                    <div>Created at</div>
-                    <div>Webhook URL</div>
-                    <div className="text-right pr-4">Go</div>
-                </div>
-                
-                {/* Table Body */}
-                <div className="divide-y divide-slate-100">
-                    {zaps.map(z => (
-                        <div key={z.id} className={`${gridLayout} text-sm text-slate-600 hover:bg-slate-50/40 transition-colors duration-150`}>
-                            
-                            {/* 1. Workflow steps with clear visual structure */}
-                            <div className="flex items-center gap-3 overflow-hidden">
-                                {/* Trigger Icon block */}
-                                <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 pl-1.5 pr-2 py-1 rounded-lg shrink-0">
+        <div className="grid grid-cols-1 gap-4">
+            {zaps.map(z => (
+                <div key={z.id} className="bg-white border border-[#e8e4df]/60 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:border-[#a3c4ab]/55 transition-all duration-300 p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 group">
+                    
+                    {/* Left: Workflow Visual Sequence */}
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-3">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
+                                Active
+                            </span>
+                            <span className="text-xs font-mono text-slate-400 truncate" title={z.id}>
+                                ID: {z.id.substring(0, 8)}...
+                            </span>
+                        </div>
+                        
+                        <div className="flex flex-wrap items-center gap-2.5">
+                            {/* Trigger Badge */}
+                            <div className="inline-flex items-center gap-2 bg-slate-50 border border-slate-200/80 pl-2 pr-3 py-1.5 rounded-xl shrink-0">
+                                {z.trigger?.type?.image ? (
                                     <img 
                                         src={z.trigger.type.image} 
-                                        className="w-[20px] h-[20px] object-contain rounded" 
+                                        className="w-5 h-5 object-contain rounded" 
                                         alt={z.trigger.type.name}
                                     /> 
-                                    <span className="text-[11px] font-medium text-slate-500">Trigger</span>
-                                </div>
+                                ) : (
+                                    <div className="w-5 h-5 rounded bg-slate-200 flex items-center justify-center text-[10px] font-bold">T</div>
+                                )}
+                                <span className="text-xs font-semibold text-slate-700">{z.trigger?.type?.name || "No Trigger"}</span>
+                            </div>
 
-                                <span className="text-slate-400 text-xs shrink-0">➔</span>
-                                
-                                {/* Actions Array block */}
-                                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-                                    {z.actions.map((x, index) => (
-                                        <div key={x.id} className="flex items-center gap-1 bg-amber-50/60 border border-amber-200/70 pl-1.5 pr-2 py-1 rounded-lg shrink-0">
-                                            <img 
-                                                src={x.type.image} 
-                                                className="w-[20px] h-[20px] object-contain rounded" 
-                                                alt={x.type.name}
-                                            />
-                                            <span className="text-[11px] font-medium text-amber-800">Action {index + 1}</span>
+                            <div className="text-slate-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
+                            </div>
+                            
+                            {/* Actions Sequence */}
+                            <div className="flex items-center flex-wrap gap-2.5">
+                                {z.actions.map((x, idx) => (
+                                    <div key={x.id} className="flex items-center gap-2">
+                                        <div className="inline-flex items-center gap-2 bg-[#e8f0eb] border border-[#a3c4ab]/20 pl-2 pr-3 py-1.5 rounded-xl shrink-0">
+                                            {x.type?.image ? (
+                                                <img 
+                                                    src={x.type.image} 
+                                                    className="w-5 h-5 object-contain rounded" 
+                                                    alt={x.type.name}
+                                                />
+                                            ) : (
+                                                <div className="w-5 h-5 rounded bg-[#a3c4ab] flex items-center justify-center text-[10px] font-bold">A</div>
+                                            )}
+                                            <span className="text-xs font-semibold text-[#3d6b4a]">{x.type?.name || "No Action"}</span>
                                         </div>
-                                    ))}
-                                </div>
+                                        {idx < z.actions.length - 1 && (
+                                            <span className="text-slate-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                                </svg>
+                                            </span>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
-                            
-                            {/* 2. Last Edit */}
-                            <div className="text-slate-500 text-xs">Nov 13, 2023</div>
-                            
-                            {/* 3. Running Status */}
-                            <div>
-                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
-                                    Active
-                                </span>
-                            </div>
-                            
-                            {/* 4. ID */}
-                            <div className="font-mono text-xs text-slate-400 truncate" title={z.id}>
-                                {z.id}
-                            </div>
-                            
-                            {/* 5. Created At */}
-                            <div className="text-slate-500 text-xs">Nov 13, 2023</div>
-                            
-                            {/* 6. Webhook URL */}
-                            <div className="font-mono text-xs text-slate-400 truncate">
-                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">/{`${HOOKS_URL}/hooks/catch/1/${z.id}`}</span>
-                            </div>
-                            
-                            {/* 7. Action Link Button */}
-                            <div className="text-right">
-                                <LinkButton onClick={() => {
-                                    router.push("/zap/" + z.id);
-                                }}>Go</LinkButton>
-                            </div>
-
                         </div>
-                    ))}
+                    </div>
+                    
+                    {/* Right: Copy Webhook & Go Actions */}
+                    <div className="flex items-center gap-4 shrink-0 border-t border-slate-100 pt-4 md:border-t-0 md:pt-0">
+                        <div className="flex flex-col gap-1 items-end">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 pr-1">Webhook endpoint</span>
+                            <WebhookCopyButton url={`${HOOKS_URL}/hooks/catch/1/${z.id}`} />
+                        </div>
+                        
+                        <div className="h-10 w-[1px] bg-slate-100 hidden md:block"></div>
+
+                        <LinkButton onClick={() => {
+                            router.push("/zap/" + z.id);
+                        }}>
+                            <span className="flex items-center gap-1">
+                                <span>Inspect</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </span>
+                        </LinkButton>
+                    </div>
+
                 </div>
-            </div>
+            ))}
         </div>
+    );
+}
+
+function WebhookCopyButton({ url }: { url: string }) {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <button 
+            onClick={handleCopy}
+            className="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 active:scale-[0.98] border border-slate-200/80 rounded-xl px-3 py-1.5 font-mono text-[11px] text-slate-600 transition-all duration-150 cursor-pointer"
+        >
+            <span className="max-w-[150px] truncate">{url.replace(/^https?:\/\//, '')}</span>
+            {copied ? (
+                <span className="text-green-600 font-semibold flex items-center gap-0.5 animate-scale-in">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-3.5 h-3.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Copied</span>
+                </span>
+            ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5 text-slate-400">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H5.4m1.5 13.5h9.75a1.125 1.125 0 001.125-1.125V7.875a1.125 1.125 0 00-1.125-1.125H9.75a1.125 1.125 0 00-1.125 1.125V18a1.125 1.125 0 001.125 1.125z" />
+                </svg>
+            )}
+        </button>
     );
 }

@@ -16,25 +16,39 @@ router.post("/",authMiddleware,async(req,res)=>{
             message:"Incorrect inputs"
         });
     }
-    // console.log("create a zap");
    try{
-    const zap=await prisma.zap.create({
-        data:{
-            userId:parseInt(id),
-            trigger:{
-                create:{
-                    triggerId:parsedData.data.availableTriggerId
-                }
-            },
-            actions: {
-                create: parsedData.data.actions.map((x, index) => ({
+    const zapId = parsedData.data.zapId;
+    if (zapId) {
+        // Clear draft data to avoid conflict
+        await prisma.action.deleteMany({ where: { zapId } });
+        await prisma.trigger.deleteMany({ where: { zapId } });
+        await prisma.zap.deleteMany({ where: { id: zapId } });
+    }
+
+    const createData: any = {
+        userId: parseInt(id),
+        trigger: {
+            create: {
+                triggerId: parsedData.data.availableTriggerId
+            }
+        },
+        actions: {
+            create: parsedData.data.actions
+                .filter(x => x.availableActionId && x.availableActionId.trim() !== "")
+                .map((x, index) => ({
                     actionId: x.availableActionId,
                     sortingOrder: index,
-                    metadata:x.actionMetadata
+                    metadata: x.actionMetadata || {}
                 }))
-            }
         }
-    })
+    };
+    if (zapId) {
+        createData.id = zapId;
+    }
+
+    const zap = await prisma.zap.create({
+        data: createData
+    });
 
     res.status(201).json({
         message:"Zap created successfully",
@@ -92,10 +106,9 @@ router.get("/:zapId",authMiddleware,async(req,res)=>{
     try{
      //@ts-ignore
    const id=req.id;
-   const zapId=req.params.id
-   const zap=await prisma.zap.findMany({
+   const zapId=req.params.zapId as string;
+   const zap=await prisma.zap.findFirst({
      where:{
-        //@ts-ignore
         id:zapId,
         userId:id
      },
@@ -109,10 +122,15 @@ router.get("/:zapId",authMiddleware,async(req,res)=>{
             include:{
                 type:true
             }
+        },
+        zapRuns: {
+            orderBy: {
+                createdAt: "desc"
+            }
         }
      }
    });
-   console.log("zaps handler");
+   console.log("zap handler by id");
    return res.json({
     zap
    })
@@ -122,6 +140,24 @@ catch(e:any){
         message:"error in getting this zap for the user"
     })
 }
+})
+
+router.get("/:zapId/test-payload", authMiddleware, async (req, res) => {
+    try {
+        const zapId = req.params.zapId as string;
+        const trigger = await prisma.trigger.findUnique({
+            where: { zapId }
+        });
+        
+        return res.json({
+            testPayload: (trigger?.metadata as any)?.testPayload || null
+        });
+    } catch (e: any) {
+        res.status(500).json({
+            message: "Error fetching test payload",
+            error: e.message
+        });
+    }
 })
 
 export const zapRouter=router;

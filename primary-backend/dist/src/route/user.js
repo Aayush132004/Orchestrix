@@ -1,4 +1,5 @@
 import { Router } from "express";
+import bcrypt from "bcryptjs";
 import { authMiddleware } from "../middleware.js";
 import { SigninSchema, SignupSchema } from "../types/index.js";
 import jwt from "jsonwebtoken";
@@ -25,11 +26,11 @@ router.post("/signup", async (req, res) => {
             message: "User already exists"
         });
     }
+    const hashedPassword = await bcrypt.hash(parsedData.data.password, 10);
     await prisma.user.create({
         data: {
             email: parsedData.data.username,
-            // TODO:Don't store passwords in plain text,hash it
-            password: parsedData.data.password,
+            password: hashedPassword,
             name: parsedData.data.name,
         }
     });
@@ -55,12 +56,17 @@ router.post("/signin", async (req, res) => {
         const user = await prisma.user.findFirst({
             where: {
                 email: parsedData.data.username,
-                password: parsedData.data.password
             }
         });
         // console.log(user);
         //  console.log("bp3")
         if (!user) {
+            return res.status(403).json({
+                message: "Sorry credentials are incorrect"
+            });
+        }
+        const isPasswordCorrect = await bcrypt.compare(parsedData.data.password, user.password);
+        if (!isPasswordCorrect) {
             return res.status(403).json({
                 message: "Sorry credentials are incorrect"
             });

@@ -121,7 +121,8 @@ export const AvailableActionScalarFieldEnum = {
 export const ZapRunsScalarFieldEnum = {
     id: 'id',
     zapId: 'zapId',
-    metadata: 'metadata'
+    metadata: 'metadata',
+    createdAt: 'createdAt'
 };
 export const ZapRunOutboxScalarFieldEnum = {
     id: 'id',

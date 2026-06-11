@@ -2,9 +2,9 @@ import React from 'react'
 
 const Feature = ({ title, subtitle }: { title: string, subtitle: string }) => {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl border border-slate-100 bg-white shadow-sm">
+    <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e8e4df] bg-white shadow-sm">
       {/* Icon Container */}
-      <div className="flex-shrink-0 p-2 bg-amber-50 rounded-lg text-amber-700">
+      <div className="flex-shrink-0 p-2 bg-[#e8f0eb] rounded-lg text-[#3d6b4a]">
         <Check />
       </div>
       

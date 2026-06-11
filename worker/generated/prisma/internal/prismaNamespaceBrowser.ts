@@ -137,7 +137,8 @@ export type AvailableActionScalarFieldEnum = (typeof AvailableActionScalarFieldE
 export const ZapRunsScalarFieldEnum = {
   id: 'id',
   zapId: 'zapId',
-  metadata: 'metadata'
+  metadata: 'metadata',
+  createdAt: 'createdAt'
 } as const
 
 export type ZapRunsScalarFieldEnum = (typeof ZapRunsScalarFieldEnum)[keyof typeof ZapRunsScalarFieldEnum]
