@@ -1,3 +1,3 @@
 import 'dotenv/config';
-export declare function sendEmail(to: string, body: string): void;
+export declare function sendEmail(to: string, body: string): Promise<void>;
 //# sourceMappingURL=email.d.ts.map

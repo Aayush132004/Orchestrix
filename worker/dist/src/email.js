@@ -1,25 +1,25 @@
-import nodemailer from "nodemailer";
+import axios from 'axios';
 import 'dotenv/config';
-export function sendEmail(to, body) {
-    const transporter = nodemailer.createTransport({
-        // @ts-ignore
-        host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        secure: false, // true only for port 465
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.BREVO_KEY
-        }
-    });
-    async function sendMail() {
-        await transporter.sendMail({
-            from: process.env.MAIL_FROM,
-            to: to,
-            subject: `mail from ${to}`,
-            text: body
-        });
-        console.log("Email sent");
+export async function sendEmail(to, body) {
+    const senderEmail = process.env.MAIL_FROM || "aayushsharma132004@gmail.com";
+    const apiKey = process.env.BREVO_KEY;
+    if (!apiKey) {
+        throw new Error("BREVO_KEY is not defined in the environment variables.");
     }
-    sendMail().catch(console.error);
+    console.log(`Sending email to ${to} via Brevo HTTP API...`);
+    await axios.post('https://api.brevo.com/v3/smtp/email', {
+        sender: { email: senderEmail },
+        to: [{ email: to }],
+        subject: `Workflow Alert`,
+        textContent: body
+    }, {
+        headers: {
+            'accept': 'application/json',
+            'api-key': apiKey,
+            'content-type': 'application/json'
+        },
+        timeout: 10000
+    });
+    console.log("Email sent successfully via HTTP API.");
 }
 //# sourceMappingURL=email.js.map
