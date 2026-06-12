@@ -84,10 +84,10 @@ export default function CreateZap() {
 
     if (checkingAuth) {
         return (
-            <div className="min-h-screen bg-[#faf9f6] flex items-center justify-center">
+            <div className="min-h-screen bg-[#0a0f0a] flex items-center justify-center">
                 <div className="flex flex-col items-center gap-3">
-                    <div className="w-10 h-10 border-4 border-[#4a7c59] border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-slate-500 text-sm font-semibold tracking-wider">Securing workspace...</p>
+                    <div className="w-10 h-10 border-4 border-[#a3e635] border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-[#6b8c6b] text-sm font-semibold tracking-wider">Loading...</p>
                 </div>
             </div>
         );
@@ -132,23 +132,23 @@ export default function CreateZap() {
     };
 
     return (
-        <div className="min-h-screen bg-[#faf9f6] flex flex-col relative">
+        <div className="min-h-screen bg-[#0a0f0a] flex flex-col relative">
             <Appbar />
 
             {/* Control Header */}
-            <div className="bg-white border-b border-[#e8e4df]/60 px-8 py-4 flex justify-between items-center shadow-[0_1px_3px_rgba(0,0,0,0.01)]">
+            <div className="bg-[#111711] border-b border-[rgba(163,230,53,0.1)] px-8 py-4 flex justify-between items-center">
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => router.push("/dashboard")}
-                        className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 hover:bg-slate-100 rounded-lg"
+                        className="text-[#4a6a4a] hover:text-[#a3e635] transition-colors p-1.5 hover:bg-[rgba(163,230,53,0.08)] rounded-lg"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                         </svg>
                     </button>
                     <div>
-                        <h1 className="text-lg font-bold text-slate-800 tracking-tight">Create Workflow</h1>
-                        <p className="text-xs text-slate-400">Design automation sequence step-by-step.</p>
+                        <h1 className="text-lg font-bold text-white tracking-tight">Create Zap</h1>
+                        <p className="text-xs text-[#4a6a4a]">Design your sequential automation step-by-step.</p>
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@ export default function CreateZap() {
             {/* Split Screen Design: Main Canvas and Test Trigger Sidebar */}
             <div className="flex-1 flex overflow-hidden">
                 {/* Visual Workflow Canvas */}
-                <div className="flex-1 flex flex-col items-center justify-center p-8 relative overflow-y-auto bg-[radial-gradient(#e8e4df_1.2px,transparent_1.2px)] [background-size:24px_24px]">
+                <div className="flex-1 flex flex-col items-center justify-center p-8 relative overflow-y-auto bg-[radial-gradient(rgba(163,230,53,0.08)_1px,transparent_1px)] [background-size:28px_28px]">
                     <div className="flex flex-col items-center w-full max-w-xl">
 
                         {/* Node 1: Trigger */}
@@ -187,8 +187,8 @@ export default function CreateZap() {
                             return (
                                 <div key={action.index || index} className="w-full flex flex-col items-center relative group/cell">
                                     {/* Vertical Connector Line */}
-                                    <div className="h-10 w-[2px] bg-slate-300 relative my-1">
-                                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 border-t-[6px] border-t-slate-400 border-x-[4px] border-x-transparent w-0 h-0"></div>
+                                    <div className="h-10 w-[2px] bg-[rgba(163,230,53,0.2)] relative my-1">
+                                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 border-t-[6px] border-t-[rgba(163,230,53,0.4)] border-x-[4px] border-x-transparent w-0 h-0"></div>
                                     </div>
 
                                     <div className="relative flex items-center justify-center w-full">
@@ -223,8 +223,8 @@ export default function CreateZap() {
                         })}
 
                         {/* Vertical Connector before Add Button */}
-                        <div className="h-10 w-[2px] bg-slate-300 relative my-1">
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 border-t-[6px] border-t-slate-400 border-x-[4px] border-x-transparent w-0 h-0"></div>
+                        <div className="h-10 w-[2px] bg-[rgba(163,230,53,0.2)] relative my-1">
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 border-t-[6px] border-t-[rgba(163,230,53,0.4)] border-x-[4px] border-x-transparent w-0 h-0"></div>
                         </div>
 
                         {/* Add Action Action Node */}
@@ -237,7 +237,7 @@ export default function CreateZap() {
                                     metadata: {}
                                 }])
                             }}
-                            className="w-11 h-11 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-800 shadow-sm hover:shadow active:scale-95 transition-all duration-200 cursor-pointer"
+                            className="w-11 h-11 bg-[rgba(163,230,53,0.1)] hover:bg-[rgba(163,230,53,0.18)] border border-[rgba(163,230,53,0.25)] hover:border-[rgba(163,230,53,0.5)] rounded-full flex items-center justify-center text-[#a3e635] hover:shadow-[0_0_20px_rgba(163,230,53,0.2)] active:scale-95 transition-all duration-200 cursor-pointer"
                             title="Add action step"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
@@ -249,15 +249,15 @@ export default function CreateZap() {
 
                 {/* Sidebar */}
                 {sidebarOpen && (
-                    <div className="w-[380px] bg-white border-l border-slate-200 shadow-xl flex flex-col animate-slide-in relative z-45">
-                        <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <div className="w-[380px] bg-[#111711] border-l border-[rgba(163,230,53,0.1)] shadow-xl flex flex-col animate-slide-in relative z-45">
+                        <div className="p-6 border-b border-[rgba(163,230,53,0.08)] flex justify-between items-center bg-[#0d120d]">
                             <div>
-                                <h3 className="font-bold text-slate-800 text-sm">Test Webhook trigger</h3>
-                                <p className="text-[11px] text-slate-400">Capture test requests sent to your webhook</p>
+                                <h3 className="font-bold text-white text-sm">Test Webhook Trigger</h3>
+                                <p className="text-[11px] text-[#4a6a4a]">Capture test requests to your webhook</p>
                             </div>
                             <button
                                 onClick={() => setSidebarOpen(false)}
-                                className="text-slate-400 hover:text-slate-700 p-1 hover:bg-slate-100 rounded-lg"
+                                className="text-[#4a6a4a] hover:text-[#a3e635] p-1 hover:bg-[rgba(163,230,53,0.08)] rounded-lg"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -267,11 +267,11 @@ export default function CreateZap() {
 
                         <div className="p-6 flex-1 overflow-y-auto space-y-5">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Test Webhook URL</label>
-                                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-600 select-all break-all shadow-inner">
+                                <label className="text-[10px] font-bold uppercase tracking-wider text-[#4a6a4a]">Test Webhook URL</label>
+                                <div className="p-3 bg-[#0a0f0a] border border-[rgba(163,230,53,0.12)] rounded-xl font-mono text-xs text-[#6b8c6b] select-all break-all">
                                     {`${HOOKS_URL}/hooks/catch/1/${zapId}/test`}
                                 </div>
-                                <p className="text-[11px] text-slate-400 leading-normal">Send a POST request to this URL with any JSON payload using Postman, curl, or a custom script to populate test variables.</p>
+                                <p className="text-[11px] text-[#4a6a4a] leading-normal">Send a POST request with any JSON payload using curl or a custom script to populate test variables.</p>
                             </div>
 
                             <div className="pt-2">
@@ -283,18 +283,18 @@ export default function CreateZap() {
                             {testPayload ? (
                                 <div className="space-y-2 animate-scale-in">
                                     <div className="flex justify-between items-center">
-                                        <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Last Received Payload</label>
-                                        <span className="text-[10px] font-semibold text-green-600 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded">Success</span>
+                                        <label className="text-[10px] font-bold uppercase tracking-wider text-[#4a6a4a]">Last Received Payload</label>
+                                        <span className="text-[10px] font-semibold text-green-400 bg-green-950/50 border border-green-800/40 px-1.5 py-0.5 rounded">Received</span>
                                     </div>
-                                    <pre className="p-4 bg-slate-900 text-green-400 rounded-xl text-[11px] font-mono overflow-auto max-h-[200px] shadow-lg">
+                                    <pre className="p-4 bg-[#060a06] border border-[rgba(163,230,53,0.06)] text-[#a3e635] rounded-xl text-[11px] font-mono overflow-auto max-h-[200px]">
                                         {JSON.stringify(testPayload, null, 2)}
                                     </pre>
-                                    <div className="text-[11px] text-slate-500 leading-normal">
-                                        You can now reference these keys in later steps as <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-700 font-bold">{`{body.your_key}`}</code>.
+                                    <div className="text-[11px] text-[#4a6a4a] leading-normal">
+                                        Reference keys in later steps as <code className="bg-[rgba(163,230,53,0.08)] px-1 py-0.5 rounded text-[#a3e635] font-bold">{`{body.your_key}`}</code>.
                                     </div>
                                 </div>
                             ) : (
-                                <div className="border border-dashed border-slate-200 rounded-2xl p-6 text-center text-slate-400 text-xs">
+                                <div className="border border-dashed border-[rgba(163,230,53,0.1)] rounded-2xl p-6 text-center text-[#4a6a4a] text-xs">
                                     Waiting for webhook hits...
                                 </div>
                             )}
