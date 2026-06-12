@@ -26,7 +26,7 @@ async function main(){
                 {
                     id:"http-request",
                     name:"HTTP Request",
-                    image:"https://upload.wikimedia.org/wikipedia/commons/c/c2/Postman_%28software%29.png"
+                    image:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTNlNjM1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE2IDRsNCA0LTQgNCIvPjxwYXRoIGQ9Ik0yMCA4SDQiLz48cGF0aCBkPSJNOCAyMGwtNC00IDQtNCIvPjxwYXRoIGQ9Ik00IDE2aDE2Ii8+PC9zdmc+"
                 },
                 {
                     id:"ai-action",

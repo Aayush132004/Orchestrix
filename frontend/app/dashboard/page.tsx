@@ -62,7 +62,7 @@ function useZaps(token: string | null) {
 function getSafeImage(actionId: string, image: string): string {
     if (actionId === 'http' || actionId === 'http-request' ||
         (image && image.includes('postman'))) {
-        return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTNlNjM1IiBzdHJva2Utd2lkdGg9IjIiPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTEyIDIxYTkuMDA0IDkuMDA0IDAgMDA4LjcxNi02Ljc0N00xMiAyMWE5LjAwNCA5LjAwNCAwIDAxLTguNzE2LTYuNzQ3TTE0LjUgMy4xNzVBOSA5IDAgMDExMiAzYTkgOSAwIDAwLTIuNS4xNzVNMyAxMmg0bTEwIDBoNE0xMiAzYy0xLjM1NiAyLjAyLTIuMjUgNS4xNDktMi4yNSA5czAuODk0IDYuOTggMi4yNSA5TTE2LjI1IDguNzVBNS45ODQgNS45ODQgMCAwMTEyIDhhNS45ODQgNS45ODQgMCAwMC00LjI1IDEuNzVNMy40NSA3LjVoMTcuMU0zLjQ1IDE2LjVoMTcuMSIvPjwvc3ZnPg==';
+        return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTNlNjM1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE2IDRsNCA0LTQgNCIvPjxwYXRoIGQ9Ik0yMCA4SDQiLz48cGF0aCBkPSJNOCAyMGwtNC00IDQtNCIvPjxwYXRoIGQ9Ik00IDE2aDE2Ii8+PC9zdmc+';
     }
     return image;
 }

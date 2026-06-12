@@ -351,22 +351,22 @@ function Modal({ index, onSelect, availableItems, testPayload, selectedActions }
     const prevActions = selectedActions.filter(a => a.index < index);
 
     return (
-        <div className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex justify-center items-center p-4">
-            <div className="relative bg-white rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.12)] w-full max-w-xl overflow-hidden border border-slate-100 animate-scale-in">
+        <div className="fixed inset-0 z-[100] bg-[rgba(10,15,10,0.7)] backdrop-blur-md flex justify-center items-center p-4">
+            <div className="relative bg-[#111711] rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.8)] w-full max-w-xl overflow-hidden border border-[rgba(163,230,53,0.12)] animate-scale-in">
 
                 {/* Modal Header */}
-                <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                <div className="flex items-center justify-between p-6 border-b border-[rgba(163,230,53,0.1)]">
                     <div>
-                        <h3 className="text-lg font-bold text-slate-800">
+                        <h3 className="text-lg font-bold text-white">
                             Select {index === 1 ? "Trigger Source" : "Workflow Action"}
                         </h3>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-[#6b8c6b] mt-0.5">
                             {step === 0 ? "Select from available integrations." : `Configure ${selectedAction?.name}`}
                         </p>
                     </div>
                     <button
                         onClick={() => onSelect(null)}
-                        className="text-slate-400 hover:text-slate-700 p-1.5 hover:bg-slate-100 rounded-xl transition-all"
+                        className="text-[#4a6a4a] hover:text-[#a3e635] p-1.5 hover:bg-[rgba(163,230,53,0.08)] rounded-xl transition-all"
                     >
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -413,8 +413,6 @@ function Modal({ index, onSelect, availableItems, testPayload, selectedActions }
                         }} />
                     )}
 
-
-
                     {/* Step 0: Choose App */}
                     {step === 0 && (
                         <div className="grid grid-cols-1 gap-2.5 max-h-[350px] overflow-y-auto pr-1">
@@ -436,16 +434,16 @@ function Modal({ index, onSelect, availableItems, testPayload, selectedActions }
                                             })
                                         }
                                     }}
-                                    className="flex border border-slate-100 rounded-2xl p-4 cursor-pointer hover:bg-slate-50/70 hover:border-slate-300/60 active:scale-[0.99] transition-all items-center gap-4 group"
+                                    className="flex border border-[rgba(163,230,53,0.08)] rounded-2xl p-4 cursor-pointer bg-[rgba(163,230,53,0.02)] hover:bg-[rgba(163,230,53,0.05)] hover:border-[rgba(163,230,53,0.25)] active:scale-[0.99] transition-all items-center gap-4 group"
                                 >
-                                    <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-inner shrink-0 group-hover:scale-105 transition-transform">
+                                    <div className="w-10 h-10 rounded-xl bg-[#0a0f0a] border border-[rgba(163,230,53,0.1)] flex items-center justify-center shadow-inner shrink-0 group-hover:scale-105 transition-transform">
                                         <img src={image} className="w-6 h-6 object-contain rounded" alt={name} />
                                     </div>
                                     <div className="flex-1">
-                                        <div className="font-bold text-slate-800 text-sm group-hover:text-slate-900">{name}</div>
-                                        <div className="text-xs text-slate-400">Click to connect this service</div>
+                                        <div className="font-bold text-white text-sm group-hover:text-[#a3e635] transition-colors">{name}</div>
+                                        <div className="text-xs text-[#4a6a4a]">Click to connect this service</div>
                                     </div>
-                                    <div className="text-slate-300 group-hover:text-slate-500 transition-colors">
+                                    <div className="text-[#4a6a4a] group-hover:text-[#a3e635] transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                         </svg>
@@ -509,8 +507,8 @@ function VariablesHelper({ testPayload, previousActions }: { testPayload: any; p
     if (suggestions.length === 0) return null;
 
     return (
-        <div className="bg-slate-50/50 border border-slate-200/60 rounded-xl p-3.5 space-y-1.5">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Available Variables (Click to copy):</div>
+        <div className="bg-[#0a0f0a] border border-[rgba(163,230,53,0.12)] rounded-xl p-3.5 space-y-1.5">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-[#4a6a4a]">Available Variables (Click to copy):</div>
             <div className="flex flex-wrap gap-1.5 max-h-[120px] overflow-y-auto">
                 {suggestions.map(variable => (
                     <code 
@@ -518,7 +516,7 @@ function VariablesHelper({ testPayload, previousActions }: { testPayload: any; p
                         onClick={() => {
                             navigator.clipboard.writeText(`{${variable}}`);
                         }}
-                        className="bg-white hover:bg-[#e8f0eb] hover:border-[#a3c4ab] border border-slate-200 px-1.5 py-0.5 rounded text-[10px] font-mono text-slate-600 select-all cursor-pointer transition-colors" 
+                        className="bg-[#111711] hover:bg-[rgba(163,230,53,0.08)] hover:text-[#a3e635] hover:border-[rgba(163,230,53,0.3)] border border-[rgba(163,230,53,0.1)] px-1.5 py-0.5 rounded text-[10px] font-mono text-[#6b8c6b] select-all cursor-pointer transition-all" 
                         title={`Click to copy {${variable}}`}
                     >
                         {`{${variable}}`}
@@ -618,11 +616,11 @@ function HttpSelector({ testPayload, setMetadata, previousActions }: { testPaylo
 
             <div className="grid grid-cols-3 gap-3">
                 <div>
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Method</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#6b8c6b]">Method</label>
                     <select
                         value={method}
                         onChange={(e) => setMethod(e.target.value)}
-                        className="w-full mt-1.5 px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a7c59]/20"
+                        className="w-full mt-1.5 px-3 py-2.5 text-sm bg-[#0a0f0a] text-white border border-[rgba(163,230,53,0.15)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#a3e635]/30 focus:border-[#a3e635] transition-all duration-200"
                     >
                         <option value="GET">GET</option>
                         <option value="POST">POST</option>
@@ -637,11 +635,11 @@ function HttpSelector({ testPayload, setMetadata, previousActions }: { testPaylo
 
             {/* Auth section */}
             <div>
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Auth Method</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#6b8c6b]">Auth Method</label>
                 <select
                     value={authType}
                     onChange={(e) => setAuthType(e.target.value)}
-                    className="w-full mt-1.5 px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none"
+                    className="w-full mt-1.5 px-3 py-2.5 text-sm bg-[#0a0f0a] text-white border border-[rgba(163,230,53,0.15)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#a3e635]/30 focus:border-[#a3e635] transition-all duration-200"
                 >
                     <option value="None">None</option>
                     <option value="Bearer">Bearer Token</option>
@@ -669,31 +667,31 @@ function HttpSelector({ testPayload, setMetadata, previousActions }: { testPaylo
             )}
 
             <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">JSON Headers</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#6b8c6b]">JSON Headers</label>
                 <textarea
                     value={headers}
                     onChange={(e) => setHeaders(e.target.value)}
                     placeholder='{"Content-Type": "application/json"}'
-                    className="w-full mt-1 px-4 py-3 text-sm bg-slate-50 font-mono rounded-xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-[#4a7c59]/10 focus:border-[#4a7c59] h-[60px]"
+                    className="w-full mt-1.5 px-4 py-3 text-sm bg-[#0a0f0a] text-white border border-[rgba(163,230,53,0.15)] placeholder-[#4a6a4a] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#a3e635]/10 focus:border-[#a3e635] h-[60px] transition-all duration-200"
                 />
             </div>
 
             {(method !== "GET" && method !== "DELETE") && (
                 <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Request Body</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#6b8c6b]">Request Body</label>
                     <textarea
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
                         placeholder='{"title": "Bug: {body.issue}"}'
-                        className="w-full mt-1 px-4 py-3 text-sm bg-slate-50 font-mono rounded-xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-[#4a7c59]/10 focus:border-[#4a7c59] h-[80px]"
+                        className="w-full mt-1.5 px-4 py-3 text-sm bg-[#0a0f0a] text-white border border-[rgba(163,230,53,0.15)] placeholder-[#4a6a4a] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#a3e635]/10 focus:border-[#a3e635] h-[80px] transition-all duration-200"
                     />
                 </div>
             )}
 
             {/* Sandbox Tester Output */}
             {testResult && (
-                <div className="p-4 bg-slate-900 rounded-2xl text-[11px] font-mono text-green-400 overflow-auto max-h-[150px] space-y-1">
-                    <div className="text-[10px] font-bold text-slate-400">Response output:</div>
+                <div className="p-4 bg-[#060a06] border border-[rgba(163,230,53,0.08)] rounded-2xl text-[11px] font-mono text-[#a3e635] overflow-auto max-h-[150px] space-y-1">
+                    <div className="text-[10px] font-bold text-[#4a6a4a]">Response output:</div>
                     <pre>{JSON.stringify(testResult, null, 2)}</pre>
                 </div>
             )}
@@ -769,28 +767,28 @@ function AISelector({ testPayload, setMetadata, previousActions }: { testPayload
             <VariablesHelper testPayload={testPayload} previousActions={previousActions} />
 
             <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">AI Prompt Instruction</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#6b8c6b]">AI Prompt Instruction</label>
                 <textarea
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder="Extract sentiment and key tags from: {body.comment}"
-                    className="w-full mt-1.5 px-4 py-3 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-[#4a7c59]/10 focus:border-[#4a7c59] h-[80px]"
+                    className="w-full mt-1.5 px-4 py-3 text-sm bg-[#0a0f0a] text-white border border-[rgba(163,230,53,0.15)] placeholder-[#4a6a4a] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#a3e635]/10 focus:border-[#a3e635] h-[80px] transition-all duration-200"
                 />
             </div>
 
             <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Output JSON Schema (Key: Description)</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#6b8c6b]">Output JSON Schema (Key: Description)</label>
                 <textarea
                     value={schema}
                     onChange={(e) => setSchema(e.target.value)}
                     placeholder='{"sentiment": "Classification (positive/negative)", "tags": "Comma-separated topics"}'
-                    className="w-full mt-1 px-4 py-3 text-sm bg-slate-50 font-mono rounded-xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-[#4a7c59]/10 focus:border-[#4a7c59] h-[80px]"
+                    className="w-full mt-1.5 px-4 py-3 text-sm bg-[#0a0f0a] text-white border border-[rgba(163,230,53,0.15)] placeholder-[#4a6a4a] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#a3e635]/10 focus:border-[#a3e635] h-[80px] transition-all duration-200"
                 />
             </div>
 
             {testResult && (
-                <div className="p-4 bg-slate-900 rounded-2xl text-[11px] font-mono text-green-400 overflow-auto max-h-[150px]">
-                    <div className="text-[10px] font-bold text-slate-400">Response output:</div>
+                <div className="p-4 bg-[#060a06] border border-[rgba(163,230,53,0.08)] rounded-2xl text-[11px] font-mono text-[#a3e635] overflow-auto max-h-[150px]">
+                    <div className="text-[10px] font-bold text-[#4a6a4a]">Response output:</div>
                     <pre>{JSON.stringify(testResult, null, 2)}</pre>
                 </div>
             )}
@@ -843,9 +841,9 @@ function DiscordSelector({ setMetadata, testPayload, previousActions }: { setMet
             <Input onChange={(e) => setContent(e.target.value)} label="Webhook Content Message" type="text" placeholder="Incoming trigger notification alert: {body.text}" />
 
             {testResult && (
-                <div className="p-4 bg-slate-900 rounded-2xl text-[11px] font-mono text-green-400 overflow-auto max-h-[150px] space-y-1">
+                <div className="p-4 bg-[#060a06] border border-[rgba(163,230,53,0.08)] rounded-2xl text-[11px] font-mono text-[#a3e635] overflow-auto max-h-[150px] space-y-1">
                     {testResult.success ? (
-                        <div className="text-green-400 font-semibold">Message sent successfully to Discord!</div>
+                        <div className="text-[#a3e635] font-semibold">Message sent successfully to Discord!</div>
                     ) : (
                         <>
                             <div className="text-red-400 font-semibold">Error testing Discord webhook:</div>
@@ -866,4 +864,6 @@ function DiscordSelector({ setMetadata, testPayload, previousActions }: { setMet
         </div>
     );
 }
+
+
 
