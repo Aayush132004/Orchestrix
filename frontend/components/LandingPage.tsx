@@ -7,42 +7,21 @@ export default function LandingPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let isMounted = true;
     let scroll: any = null;
     let gsapCtx: any = null;
+    let observer: IntersectionObserver | null = null;
 
     const init = async () => {
       const { default: LocomotiveScroll } = await import("locomotive-scroll");
       const gsap = (await import("gsap")).default;
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
+      
+      if (!isMounted) return;
 
-      scroll = new LocomotiveScroll({
-        el: containerRef.current!,
-        smooth: true,
-        multiplier: 0.9,
-        lerp: 0.07,
-        scrollbarContainer: false,
-        scrollFromAnywhere: false,
-        tablet: { smooth: true },
-        smartphone: { smooth: false },
-      });
-
-      scroll.on("scroll", () => { ScrollTrigger.update(); });
-
-      ScrollTrigger.scrollerProxy(containerRef.current!, {
-        scrollTop(value) {
-          if (arguments.length && scroll) {
-            scroll.scrollTo(value, { duration: 0, disableLerp: true });
-          }
-          return scroll ? (scroll as any).scroll.instance.scroll.y : 0;
-        },
-        getBoundingClientRect() {
-          return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-        },
-        pinType: containerRef.current!.style.transform ? "transform" : "fixed",
-      });
+      scroll = new LocomotiveScroll();
 
       gsapCtx = gsap.context(() => {
+        // Hero animations run immediately on load
         gsap.from(".hero-title-word", {
           y: 70,
           opacity: 0,
@@ -79,64 +58,67 @@ export default function LandingPage() {
           ease: "power3.out",
           delay: 1.1,
         });
-        gsap.from(".flow-node", {
-          scrollTrigger: {
-            trigger: ".flow-section",
-            scroller: containerRef.current,
-            start: "top 70%",
-          },
-          y: 40,
-          opacity: 0,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-        gsap.from(".feature-card", {
-          scrollTrigger: {
-            trigger: ".features-section",
-            scroller: containerRef.current,
-            start: "top 75%",
-          },
-          y: 50,
-          opacity: 0,
-          stagger: 0.08,
-          duration: 0.7,
-          ease: "power3.out",
-        });
-        gsap.from(".stat-item", {
-          scrollTrigger: {
-            trigger: ".stats-section",
-            scroller: containerRef.current,
-            start: "top 80%",
-          },
-          scale: 0.85,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "back.out(1.4)",
-        });
-        gsap.from(".cta-section > *", {
-          scrollTrigger: {
-            trigger: ".cta-section",
-            scroller: containerRef.current,
-            start: "top 80%",
-          },
-          y: 40,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.8,
-          ease: "power3.out",
-        });
+
+        // Set initial states for elements that animate on scroll
+        gsap.set(".flow-node", { y: 40, opacity: 0 });
+        gsap.set(".feature-card", { y: 50, opacity: 0 });
+        gsap.set(".stat-item", { scale: 0.85, opacity: 0 });
+        gsap.set(".cta-section > *", { y: 40, opacity: 0 });
       });
 
-      ScrollTrigger.addEventListener("refresh", () => scroll?.update());
-      ScrollTrigger.refresh();
+      // Intersection Observer for viewport triggers
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target;
+            if (target.classList.contains('flow-section')) {
+              gsap.to(target.querySelectorAll('.flow-node'), {
+                y: 0,
+                opacity: 1,
+                stagger: 0.15,
+                duration: 0.8,
+                ease: "power3.out",
+              });
+            } else if (target.classList.contains('features-section')) {
+              gsap.to(target.querySelectorAll('.feature-card'), {
+                y: 0,
+                opacity: 1,
+                stagger: 0.08,
+                duration: 0.7,
+                ease: "power3.out",
+              });
+            } else if (target.classList.contains('stats-section')) {
+              gsap.to(target.querySelectorAll('.stat-item'), {
+                scale: 1,
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.6,
+                ease: "back.out(1.4)",
+              });
+            } else if (target.classList.contains('cta-section')) {
+              gsap.to(target.querySelectorAll('.cta-section > *'), {
+                y: 0,
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power3.out",
+              });
+            }
+            observer?.unobserve(target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      const sections = document.querySelectorAll('.flow-section, .features-section, .stats-section, .cta-section');
+      sections.forEach(s => observer?.observe(s));
     };
 
     init();
     return () => {
+      isMounted = false;
       gsapCtx?.revert();
       scroll?.destroy();
+      observer?.disconnect();
     };
   }, []);
 
@@ -329,7 +311,7 @@ export default function LandingPage() {
                 desc: "Core webhook zaps are free. No time limits, no credit card required.",
               },
             ].map((f, i) => (
-              <div key={i} className="feature-card card-dark feature-card-glow p-6 transition-all duration-300">
+              <div key={i} className="feature-card card-dark feature-card-glow p-6 transition-colors duration-300">
                 <div className="w-10 h-10 rounded-xl bg-[rgba(163,230,53,0.07)] border border-[rgba(163,230,53,0.12)] flex items-center justify-center text-[#a3e635] mb-4">
                   {f.icon}
                 </div>
